@@ -41,7 +41,7 @@ class Code
 
   def num_exact_matches(code)
     #compare code.pegs with @pegs
-    num = 0 
+    num = 0
     code.pegs.each_with_index do |char, i|
       num = num + 1 if char == @pegs[i]
     end
@@ -66,12 +66,8 @@ class Code
   end
 
   def ==(code)
-    if code.pegs == @pegs
-      return true
-    else
-      return false
-    end
+    code.pegs == @pegs
   end
-  
+
 
 end
