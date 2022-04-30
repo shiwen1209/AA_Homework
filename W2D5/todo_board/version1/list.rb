@@ -1,3 +1,5 @@
+require_relative "./item.rb"
+
 class List
 
     attr_accessor :label
@@ -41,28 +43,29 @@ class List
     end
 
     def print
-        puts "-"*38
-        puts "#{@label}".center(38)
-        puts "-"*38
-        puts "Index ".ljust(6) + "| Item ".ljust(20) + "| Deadline".ljust(12)
-        puts "-"*38
+        puts "-"*44
+        puts "#{@label}".center(44)
+        puts "-"*44
+        puts "Index ".ljust(6) + "| Item ".ljust(20) + "| Deadline".ljust(12) + "| Complete".ljust(6)
+        puts "-"*44
         @items.each_with_index do |item, i|
-            puts "#{i} ".ljust(6) + "| #{item.title} ".ljust(20) + "| #{item.deadline}".ljust(12)
+            puts "#{i} ".ljust(6) + "| #{item.title} ".ljust(20) + "| #{item.deadline}".ljust(12) + "#{item.complete}".ljust(6)
         end 
-        puts "-"*38
+        puts "-"*44
             
     end 
 
     def print_full_item(index)
-        puts "-"*38
-        puts "#{self[index].title}".ljust(20) + "#{self[index].deadline}".rjust(18)
+        puts "-"*44
+        puts "#{self[index].title}".ljust(20) + "#{self[index].deadline}".ljust(12) + "#{self[index].complete}".rjust(12)
         puts "#{self[index].description}"
-        puts "-"*38
+        puts "-"*44
 
     end
 
     def print_priority
         print_full_item(0)
+    
     end
 
     def up(index, amount=1)
@@ -88,6 +91,30 @@ class List
     def sort_by_date!
         @items.sort_by!{|ele| ele.deadline}
     end
+
+    def toggle_item(index)
+        @items[index].toggle
+    end
+
+
+    def remove_item(index)
+        return false if !self.valid_index?(index)
+        @items.delete_at(index)
+        return true
+    end
+
+    def purge
+        new_item = []
+        @items.each do |item|
+            if !item.complete
+                new_item<< item
+            end
+        end
+
+        @items = new_item
+
+    end
+    
 
 
 end

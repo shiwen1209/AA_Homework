@@ -12,6 +12,7 @@ class Item
     end
 
     attr_accessor :title, :deadline, :description
+    attr_reader :complete
     def initialize(title, deadline, description)
         if !Item.valid_date?(deadline)
             raise "deadline is not valid"
@@ -19,9 +20,11 @@ class Item
         @title = title
         @deadline = deadline
         @description = description
-        if !Item.valid_date?(deadline)
-            raise "deadline is not valid"
-        end
+        @complete = false
+    end
+
+    def toggle
+        @complete ? @complete = false : @complete = true
     end
 
 end
